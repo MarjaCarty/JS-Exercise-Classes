@@ -77,7 +77,30 @@ class Person {
 */
 
 class Car {
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
 
+  fill (gallons) {
+    this.tank += gallons;
+  }
+
+  drive(distance) {
+    let totalMiles = this.milesPerGallon * this.tank;
+    
+    this.odometer += distance;
+    this.tank -= distance / this.milesPerGallon
+
+    if (distance > totalMiles) {
+      this.tank = 0;
+      this.odometer = totalMiles;
+      return `I ran out of fuel at ${this.odometer}!`
+    }
+
+  }
 }
 
 /*
