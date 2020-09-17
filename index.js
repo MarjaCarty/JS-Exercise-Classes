@@ -156,6 +156,26 @@ class Instructor extends Lambdasian {
   grade (student, subject) {
     return `${student.name} receives a perfect score on ${subject}`
   }
+
+  finalGrade(grade) {
+    let random1 = Math.floor(Math.random() * 30);
+    let random2 = Math.random();
+    let newGrade = grade;
+
+    if (random2 < 0.5) {
+      newGrade -= random1;
+    } else {
+      newGrade += random1;
+    }
+
+    if (newGrade < 0) {
+      return newGrade = 0;
+    } else if (newGrade > 100) {
+      return newGrade = 100;
+    } else {
+      return newGrade;
+    }
+  }
 }
 
 /*
@@ -179,6 +199,15 @@ class Student extends Lambdasian {
     this.previousBackground = attrs.previousBackground;
     this.className = attrs.className;
     this.favSubjects = attrs.favSubjects;
+    this.grade = attrs.grade;
+    this.ins = new Instructor({
+      name: null,
+      location: null,
+      age: null,
+      specialty: null,
+      favLanguage: null,
+      catchPhrase: null
+    });
   }
 
   listSubjects () {
@@ -192,6 +221,18 @@ class Student extends Lambdasian {
 
   sprintChallenge(subject) {
     return `${this.name} has begun sprint challenge on ${subject}`
+  }
+
+  graduate(grade) {
+    let newGrade = this.ins.finalGrade(grade);
+    
+
+    if (newGrade > 70) {
+      return "Congrats, you graduate!"
+    } else {
+      this.graduate(newGrade);
+      return newGrade;
+    }
   }
 }
 
@@ -232,6 +273,18 @@ class ProjectManager extends Instructor {
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+
+let student = new Student ({
+  name: "sname",
+  location: "slocation",
+  age: "sage",
+  previousBackground: "previousBackground",
+  className: "className",
+  favSubjects: ["string1", "string2", "string3"],
+  grade: 70,
+})
+
+console.log(student.graduate(student.grade))
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
